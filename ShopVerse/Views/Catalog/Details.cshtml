@@ -1,0 +1,6 @@
+﻿<form method="post" asp-controller="Cart" asp-action="Add">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="id" value="@Model.Id" />
+    <input type="number" name="qty" value="1" min="1" class="form-control" style="width:120px;display:inline-block;" />
+    <button class="btn btn-success">Add to cart</button>
+</form>

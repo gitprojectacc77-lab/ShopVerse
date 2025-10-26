@@ -1,0 +1,13 @@
+﻿@model ShopVerse.Data.Product
+@{
+    ViewData["Title"] = "Delete product";
+}
+<h2>Delete product</h2>
+<div class="alert alert-warning">
+    Are you sure you want to delete <strong>@Model.Title</strong>?
+</div>
+<form method="post" asp-action="DeleteConfirmed" asp-route-id="@Model.Id">
+    @Html.AntiForgeryToken()
+    <button class="btn btn-danger">Delete</button>
+    <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+</form>

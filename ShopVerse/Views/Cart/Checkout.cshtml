@@ -1,0 +1,19 @@
+﻿@model ShopVerse.Models.CartVm
+@{
+    ViewData["Title"] = "Checkout";
+}
+<h2>Checkout</h2>
+<table class="table">
+    <thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+    <tbody>
+        @foreach (var i in Model.Items)
+        {
+            <tr><td>@i.Title</td><td>@i.Quantity</td><td>@i.UnitPrice.ToString("0.00") ₼</td><td>@i.LineTotal.ToString("0.00") ₼</td></tr>
+        }
+    </tbody>
+    <tfoot><tr><td colspan="3" class="text-end"><strong>Total:</strong></td><td><strong>@Model.Total.ToString("0.00") ₼</strong></td></tr></tfoot>
+</table>
+<form method="post" asp-action="CheckoutConfirm" asp-controller="Cart">
+    @Html.AntiForgeryToken()
+    <button class="btn btn-success">Place order</button>
+</form>

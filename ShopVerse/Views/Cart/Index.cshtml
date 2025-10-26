@@ -1,0 +1,43 @@
+﻿@model ShopVerse.Models.CartVm
+@{
+    ViewData["Title"] = "Cart";
+}
+<h2>Cart</h2>
+
+@if (Model.IsEmpty)
+{
+     <p>Your cart is empty.</p>
+}
+else
+{
+    <table class="table">
+        <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th>Total</th><th></th></tr></thead>
+        <tbody>
+            @foreach (var i in Model.Items)
+            {
+                <tr>
+                    <td><img src="@i.ImageUrl" style="height:40px;width:60px;object-fit:cover;margin-right:8px;" /> @i.Title</td>
+                    <td>@i.UnitPrice.ToString("0.00") ₼</td>
+                    <td>
+                        <form method="post" asp-controller="Cart" asp-action="Update" class="d-flex">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@i.ProductId" />
+                            <input type="number" name="qty" value="@i.Quantity" min="1" class="form-control" style="width:80px;" />
+                            <button class="btn btn-outline-secondary ms-2">OK</button>
+                        </form>
+                    </td>
+                    <td>@i.LineTotal.ToString("0.00") ₼</td>
+                    <td>
+                        <form method="post" asp-controller="Cart" asp-action="Remove">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@i.ProductId" />
+                            <button class="btn btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot><tr><td colspan="3" class="text-end"><strong>Total:</strong></td><td><strong>@Model.Total.ToString("0.00") ₼</strong></td><td></td></tr></tfoot>
+    </table>
+    <a class="btn btn-primary" asp-action="Checkout" asp-controller="Cart">Checkout</a>
+}

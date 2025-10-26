@@ -1,0 +1,31 @@
+﻿@model IEnumerable<ShopVerse.Data.Order>
+@{
+    ViewData["Title"] = "My orders";
+}
+<h2>My orders</h2>
+
+@if (!Model.Any())
+{
+    <p>No orders yet.</p>
+}
+else
+{
+    <div class="list-group">
+        @foreach (var o in Model)
+        {
+            <div class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <strong>#@o.Id</strong>
+                    <span>@o.CreatedAt.ToLocalTime().ToString("g")</span>
+                </div>
+                <div>Status: <strong>@o.Status</strong> • Total: <strong>@o.Total.ToString("0.00") ₼</strong></div>
+                <ul class="mt-2">
+                    @foreach (var it in o.Items)
+                    {
+                        <li>@it.Product.Title × @it.Quantity — @it.UnitPrice.ToString("0.00") ₼</li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+}

@@ -1,0 +1,8 @@
+﻿@model ShopVerse.Data.Order
+@{
+    ViewData["Title"] = "Order placed";
+}
+<h2>Order #@Model.Id placed</h2>
+<p>Status: @Model.Status</p>
+<p>Total: <strong>@Model.Total.ToString("0.00") ₼</strong></p>
+<a class="btn btn-primary" asp-controller="Catalog" asp-action="Index">Back to catalog</a>
